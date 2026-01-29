@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo(0, 0);
         }
 
+        // Handle Nav Visibility
+        const bottomNav = document.querySelector('.bottom-nav');
+        if (pageId === 'page-cover') {
+            if (bottomNav) bottomNav.style.display = 'none';
+        } else {
+            if (bottomNav) bottomNav.style.display = 'flex';
+        }
+
         // Update Nav Active State
         navItems.forEach(item => {
             item.classList.remove('active');
@@ -33,8 +41,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Default to Video Page
-    showPage('page-video');
+    // Handle Opening
+    const btnOpen = document.getElementById('btn-open-invitation');
+    if (btnOpen) {
+        btnOpen.addEventListener('click', () => {
+            // Play Music
+            if (player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                player.playVideo();
+            }
+            // Go to Main Invitation
+            showPage('page-video');
+        });
+    }
+
+    // Default to Cover Page
+    showPage('page-cover');
 
     // RSVP Form Handling
     const rsvpForm = document.getElementById('rsvp-form');
@@ -43,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('rsvp-name').value;
         const status = document.getElementById('rsvp-status').value;
         const guests = document.getElementById('rsvp-guests').value;
+        const vehicle = document.getElementById('rsvp-vehicle').value;
         const messageDoa = document.getElementById('rsvp-doa').value;
 
         // 1. Process Doa (if not empty)
@@ -57,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 2. Format WhatsApp Message
         // User requested: Output kehadiran direct ke WA
-        const waMessage = `Halo, saya *${name}* ingin konfirmasi kehadiran untuk Grand Opening.\n\nStatus: ${status}\nJumlah Tamu: ${guests} orang\n\nTerima kasih.`;
+        const waMessage = `Halo, saya *${name}* ingin konfirmasi kehadiran untuk Grand Opening.\n\nStatus: ${status}\nJumlah Tamu: ${guests} orang\nMembawa Kendaraan: ${vehicle}\n\nTerima kasih.`;
 
         // Encode URL
         const whatsappUrl = `https://wa.me/6282215159061?text=${encodeURIComponent(waMessage)}`;
@@ -117,13 +139,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function saveDoa(doa) {
-        let doas = JSON.parse(localStorage.getItem('grand_opening_doas_live')) || [];
+        let doas = JSON.parse(localStorage.getItem('grand_opening_doas_clean')) || [];
         doas.unshift(doa); // Add to beginning
-        localStorage.setItem('grand_opening_doas_live', JSON.stringify(doas));
+        localStorage.setItem('grand_opening_doas_clean', JSON.stringify(doas));
     }
 
     function loadDoas() {
-        let doas = JSON.parse(localStorage.getItem('grand_opening_doas_live')) || [];
+        let doas = JSON.parse(localStorage.getItem('grand_opening_doas_clean')) || [];
 
 
         doaList.innerHTML = '';
@@ -156,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addDoaToDOM(doa, animate = false) {
         const item = document.createElement('div');
-        item.className = 'doa-item';
+        item.className = 'doa-list-item-redesign';
         if (animate) {
             item.style.animation = 'fadeIn 0.5s ease-out';
         }
@@ -186,26 +208,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const gallery = document.querySelector('.invitation-gallery');
 
-    // Create Tap Hint
-    const tapHint = document.createElement('div');
-    tapHint.className = 'tap-hint';
-    tapHint.innerHTML = 'Ketuk untuk lanjut &raquo;';
-    gallery.appendChild(tapHint);
+    if (gallery) {
+        // Create Tap Hint
+        const tapHint = document.createElement('div');
+        tapHint.className = 'tap-hint';
+        tapHint.innerHTML = 'Ketuk untuk lanjut &raquo;';
+        gallery.appendChild(tapHint);
 
-    gallery.addEventListener('click', (e) => {
-        // Prevent trigger if clicking button or hint
-        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('a') || e.target.classList.contains('tap-hint')) return;
+        gallery.addEventListener('click', (e) => {
+            // Prevent trigger if clicking button or hint
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('a') || e.target.classList.contains('tap-hint')) return;
 
-        let slides = document.getElementsByClassName("invitation-slide");
+            let slides = document.getElementsByClassName("invitation-slide");
 
-        if (slideIndex < slides.length) {
-            transitionSlide(slideIndex, slideIndex + 1);
-            slideIndex++;
-        } else {
-            // If at last slide, go to RSVP page
-            showPage('page-rsvp');
-        }
-    });
+            if (slideIndex < slides.length) {
+                transitionSlide(slideIndex, slideIndex + 1);
+                slideIndex++;
+            } else {
+                // If at last slide, go to RSVP page
+                showPage('page-rsvp');
+            }
+        });
+    }
 
     function showSlides(n) {
         // Initial setup only

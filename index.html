@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Philosopher:wght@400;700&family=Belleza&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,61 +23,134 @@
     <div id="youtube-player" style="display:none;"></div>
 
     <main class="container">
-        <!-- PAGE 1: Invitation (Video) -->
-        <div id="page-video" class="page-section fade-in">
-            <!-- <header id="header">
-                <h1>Grand Opening</h1>
-                <p class="subtitle">Nurokhim S.Ag, S.Pd</p>
-            </header> -->
+        <!-- PAGE 0: Cover (Opening) -->
+        <div id="page-cover" class="page-section fade-in" style="z-index: 100;">
+            <div class="invitation-detail-container"
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100vh;">
+                <!-- Floral Decorations -->
+                <img src="assets/Flower-top-left.png" class="flower-decor top-left" alt="">
+                <img src="assets/Flower-top-right.png" class="flower-decor top-right" alt="">
+                <img src="assets/Flower-bottom-left.png" class="flower-decor bottom-left" alt="">
+                <img src="assets/Flower-bottom-right.png" class="flower-decor bottom-right" alt="">
 
-            <section class="invitation-gallery slideshow-container">
-                <img src="invitation/1.svg" alt="Hal 1" class="invitation-slide fade">
-                <img src="invitation/2.svg" alt="Hal 2" class="invitation-slide fade">
-                <!-- <img src="invitation/3.svg" alt="Hal 3" class="invitation-slide fade"> -->
-                <!-- <img src="invitation/4.svg" alt="Hal 4" class="invitation-slide fade"> -->
-
-                <div class="invitation-slide fade" style="position: relative; padding-bottom: 20px;">
-                    <!-- Image and Button Wrapper -->
-                    <div style="position: relative;">
-                        <img src="invitation/5.svg" alt="Hal 5" style="width: 100%; display: block;">
-
-                        <button onclick="document.querySelector('[data-target=\'page-rsvp\']').click()" class="btn-wa"
-                            style="border:none; cursor:pointer; position: absolute; bottom: 12%; left: 0; right: 0; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                            Konfirmasi Kehadiran
-                        </button>
-
-                        <a href="https://share.google/k7b84Hk3QBmnE0tF1" target="_blank" class="btn-location"
-                            style="border:none; cursor:pointer; position: absolute; bottom: 6%; left: 0; right: 0; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                            📍 Lihat Lokasi
-                        </a>
+                <div class="cover-content" style="position: relative; z-index: 2; width: 100%;">
+                    <div style="margin-bottom: 20px;">
+                        <img src="assets/iqibla_logo.png" alt="iQIBLA" style="width: 140px; margin-bottom: 20px;">
                     </div>
 
-                    <!-- Recent Doa Section inside Last Slide -->
-                    <div class="glass-card"
-                        style="margin: 20px 15px; padding: 15px; background: rgba(255, 255, 255, 0.8);">
-                        <h3
-                            style="text-align: center; margin-bottom: 10px; font-size: 1.1rem; color: var(--primary-dark);">
-                            Ucapan Terbaru</h3>
-                        <div id="recent-doa-list">
-                            <!-- Recent doas will be loaded here -->
-                        </div>
+                    <h2
+                        style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-dark-green); margin-bottom: 5px;">
+                        YOU ARE INVITED!</h2>
+                    <h1
+                        style="font-family: var(--font-heading); font-size: 2.8rem; color: var(--color-gold); line-height: 1.2; margin-bottom: 30px;">
+                        Grand Opening</h1>
+
+                    <!-- Guest Name Box -->
+                    <div
+                        style="background: white; border: 1px solid var(--color-gold); border-radius: 12px; padding: 20px; width: 80%; margin: 0 auto 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                        <p style="font-family: var(--font-body); font-size: 0.9rem; color: #666; margin-bottom: 5px;">
+                            Kepada Yth. Bapak/Ibu/Saudara/i</p>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; color: #333; margin: 0;">Tamu
+                            Undangan</h3>
+                    </div>
+
+                    <button id="btn-open-invitation" class="btn-rsvp-redesign"
+                        style="width: auto; padding: 12px 40px; margin: 0 auto; box-shadow: 0 4px 20px rgba(26, 60, 52, 0.3);">
+                        <span style="margin-right: 8px;">📩</span> Buka Undangan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 1: Invitation (Detail Layout) -->
+        <div id="page-video" class="page-section fade-in"
+            style="overflow-y: auto; height: 100vh; padding-bottom: 80px;">
+            <div class="invitation-detail-container">
+                <!-- Floral Decorations -->
+                <img src="assets/Flower-top-left.png" class="flower-decor top-left" alt="">
+                <img src="assets/Flower-top-right.png" class="flower-decor top-right" alt="">
+                <img src="assets/Flower-bottom-left.png" class="flower-decor bottom-left" alt="">
+                <img src="assets/Flower-bottom-right.png" class="flower-decor bottom-right" alt="">
+
+                <!-- Header -->
+                <header class="invitation-header">
+                    <img src="assets/iqibla_logo.png" alt="iQIBLA" class="logo-main">
+                    <h1 class="main-title">Invitation Grand<br>Opening</h1>
+                </header>
+
+                <!-- Date & Time Grid -->
+                <div class="info-grid">
+                    <div class="info-card">
+                        <span class="label">Tanggal</span>
+                        <span class="value-large">07</span>
+                        <span class="value-medium">February 2026</span>
+                    </div>
+                    <div class="info-card">
+                        <span class="label">waktu</span>
+                        <span class="value-large">09:00 <small>wib</small></span>
+                        <span class="value-medium">s.d Selesai</span>
                     </div>
                 </div>
-            </section>
 
+                <!-- Location Card -->
+                <div class="location-card-redesign">
+                    <h3 class="gold-title">Lokasi</h3>
+                    <p class="address-text">
+                        Ruko D'East Residence, Jl. Raya Condet No.77 11 2, RT.2/RW.3, Gedong, Kec. Kramat jati, Kota
+                        Jakarta Timur, Daerah Khusus Ibukota Jakarta 13540
+                    </p>
+                    <a href="https://maps.app.goo.gl/SbGLoBkTMaXxHXLb7" target="_blank" class="btn-location-redesign">
+                        Lihat Lokasi
+                    </a>
+                </div>
 
+                <!-- Event Details -->
+                <div class="event-details">
+                    <p class="event-list">
+                        Opening, Islamic Music, Goodie Bag, Door Prize, Snack,<br>Lunch and Drink Free Merch
+                    </p>
+
+                    <div class="dresscode-section">
+                        <span class="label">Dresscode</span>
+                        <span class="value">Nude/Brown</span>
+                    </div>
+
+                    <button onclick="document.querySelector('[data-target=\'page-rsvp\']').click()"
+                        class="btn-rsvp-redesign">
+                        Konfirmasi Kehadiran
+                    </button>
+                </div>
+
+                <!-- Recent Doa (Moved here) -->
+                <div class="recent-doa-section">
+                    <h3 class="gold-title">Ucapan Terbaru</h3>
+                    <div id="recent-doa-list">
+                        <!-- Content populated by JS -->
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- PAGE 2: RSVP -->
         <div id="page-rsvp" class="page-section hidden">
-            <section class="content-section">
-                <div class="glass-card">
+            <div class="invitation-detail-container">
+                <!-- Floral Decorations -->
+                <img src="assets/Flower-top-left.png" class="flower-decor top-left" alt="">
+                <img src="assets/Flower-top-right.png" class="flower-decor top-right" alt="">
+                <img src="assets/Flower-bottom-left.png" class="flower-decor bottom-left" alt="">
+                <img src="assets/Flower-bottom-right.png" class="flower-decor bottom-right" alt="">
+
+                <section class="content-section" style="margin-top: 20px;">
+
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <img src="assets/iqibla_logo.png" alt="iQIBLA" style="width: 100px;">
+                    </div>
                     <h2>Konfirmasi Kehadiran</h2>
-                    <p class="section-desc">Mohon isi form di bawah ini untuk konfirmasi kehadiran dan kirim doa.</p>
+                    <p class="section-desc">Mohon isi form di bawah ini untuk konfirmasi kehadiran</p>
                     <form id="rsvp-form">
                         <div class="form-group">
                             <label for="rsvp-name">Nama</label>
-                            <input type="text" id="rsvp-name" required placeholder="Nama Lengkap">
+                            <input type="text" id="rsvp-name" required placeholder="Nama">
                         </div>
                         <div class="form-group">
                             <label for="rsvp-status">Kehadiran</label>
@@ -88,58 +161,71 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="rsvp-guests">Jumlah Tamu</label>
+                            <label for="rsvp-guests">Jumlah tamu</label>
                             <input type="number" id="rsvp-guests" min="1" max="5" value="1">
                         </div>
                         <div class="form-group">
+                            <label for="rsvp-vehicle">Apakah anda membawa kendaraan?</label>
+                            <select id="rsvp-vehicle">
+                                <option value="tidak">Tidak</option>
+                                <option value="ya">Ya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="rsvp-doa">Ucapan & Doa</label>
-                            <textarea id="rsvp-doa" placeholder="Tuliskan doa atau ucapan selamat..."></textarea>
+                            <textarea id="rsvp-doa" placeholder="Tuliskan doa atau ucapan selamat"></textarea>
                         </div>
                         <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
                     </form>
-                </div>
+            </div>
             </section>
-
-
+        </div>
         </div>
 
-        <!-- PAGE 3: Doa (Quote + Guestbook) -->
+        <!-- PAGE 3: Doa (Detail Layout) -->
         <div id="page-doa" class="page-section hidden">
-            <!-- Quote Section -->
-            <!-- <section class="quote-section glass-card">
-                <blockquote>
-                    "Semoga Allah memberkahi usahamu, dan memberkahi umat-Nya melalui usahamu."
-                </blockquote>
-            </section> -->
+            <div class="invitation-detail-container">
+                <!-- Floral Decorations -->
+                <img src="assets/Flower-top-left.png" class="flower-decor top-left" alt="">
+                <img src="assets/Flower-top-right.png" class="flower-decor top-right" alt="">
+                <img src="assets/Flower-bottom-left.png" class="flower-decor bottom-left" alt="">
+                <img src="assets/Flower-bottom-right.png" class="flower-decor bottom-right" alt="">
 
-            <section class="content-section">
-                <div class="glass-card">
-                    <h2>Doa & Ucapan</h2>
+                <header class="invitation-header" style="margin-top: 60px; margin-bottom: 20px;">
+                    <img src="assets/iqibla_logo.png" alt="iQIBLA" class="logo-main" style="width: 120px;">
+                </header>
 
-                    <button id="btn-open-doa" class="btn-submit" style="margin-bottom: 20px;">Tulis Doa &
-                        Ucapan</button>
+                <section class="content-section">
+                    <div class="glass-card">
+                        <h2>Doa & Ucapan</h2>
+                        <!-- We can keep the button if user wants to add doa from here too, or just rely on RSVP -->
+                        <button id="btn-open-doa" class="btn-rsvp-redesign"
+                            style="margin-bottom: 20px; width: auto; padding-left: 30px; padding-right: 30px; margin: 0 auto 20px;">+
+                            Tulis Ucapan</button>
 
-                    <div id="doa-list" class="doa-list">
-                        <!-- Doa items will be populated here -->
+                        <div id="doa-list" class="doa-list">
+                            <!-- Doa items will be populated here -->
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
 
-        <!-- Modal Doa -->
+        <!-- Modal Doa (Keep existing structure, just ensure it works) -->
         <div id="modal-doa" class="modal hidden">
-            <div class="modal-content glass-card">
+            <div class="modal-content glass-card" style="background: white; border-radius: 20px;">
                 <span class="close-modal">&times;</span>
-                <h2>Kirim Doa & Ucapan</h2>
+                <h2 style="color: var(--color-dark-green); margin-top: 0;">Kirim Doa</h2>
                 <form id="doa-form">
                     <div class="form-group">
-                        <input type="text" id="doa-name" required placeholder="Nama Anda">
+                        <input type="text" id="doa-name" required placeholder="Nama Anda"
+                            style="border: 1px solid var(--color-gold); background: #fafafa;">
                     </div>
                     <div class="form-group">
-                        <textarea id="doa-message" required
-                            placeholder="Tuliskan doa atau ucapan selamat..."></textarea>
+                        <textarea id="doa-message" required placeholder="Tuliskan doa atau ucapan selamat..."
+                            style="border: 1px solid var(--color-gold); background: #fafafa;"></textarea>
                     </div>
-                    <button type="submit" class="btn-submit">Kirim Ucapan</button>
+                    <button type="submit" class="btn-rsvp-redesign">Kirim Ucapan</button>
                 </form>
             </div>
         </div>

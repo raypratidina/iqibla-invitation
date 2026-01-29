@@ -18,10 +18,9 @@
 body {
     font-family: 'Outfit', sans-serif;
     background-color: #EDECDD;
-    color: var(--text-color);
-    min-height: 100vh;
-    padding-bottom: 100px;
     /* Space for floating navbar */
+    overflow: hidden;
+    /* Prevent scroll on body, handle in sections */
 }
 
 /* Page Styling */
@@ -539,4 +538,428 @@ footer {
     100% {
         transform: rotate(360deg);
     }
+}
+
+/* --- Redesign Styles from Figma --- */
+:root {
+    --color-dark-green: #1a3c34;
+    --color-gold: #c5a059;
+    --font-heading: 'Philosopher', serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-accent: 'Belleza', sans-serif;
+}
+
+.invitation-detail-container {
+    padding: 20px 20px 80px 20px;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
+    background: url('assets/BG.png');
+    /* Use noise texture */
+    background-size: cover;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    /* Lift from noise BG */
+    overflow: hidden;
+    border-radius: 30px;
+    /* Rounded corners */
+    /* Clip flowers if they stick out too much */
+}
+
+/* Flowers */
+/* Background Animation (Disabled - using BG.png) */
+.background-animation {
+    display: none;
+}
+
+.flower-decor {
+    position: absolute;
+    width: 200px;
+    /* Slightly larger */
+    height: auto;
+    z-index: 1;
+    /* On top of white BG */
+    pointer-events: none;
+    opacity: 1;
+    /* Fully visible */
+}
+
+/* Ensure content sits above flowers */
+.invitation-header,
+.info-grid,
+.location-card-redesign,
+.event-details,
+.recent-doa-section,
+.cover-content,
+.content-section {
+    position: relative;
+    z-index: 2;
+}
+
+/* Flower Positioning */
+.flower-decor.top-left {
+    top: -20px;
+    left: -20px;
+}
+
+.flower-decor.top-right {
+    top: -20px;
+    right: -20px;
+}
+
+.flower-decor.bottom-left {
+    top: auto;
+    bottom: -20px;
+    left: -20px;
+}
+
+.flower-decor.bottom-right {
+    top: auto;
+    bottom: -20px;
+    right: -20px;
+}
+
+/* Header */
+.invitation-header {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+.logo-main {
+    width: 140px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.main-title {
+    font-family: var(--font-heading);
+    color: var(--color-dark-green);
+    font-size: 2.5rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.info-card {
+    background: white;
+    gap: 4px;
+    padding: 8px 8px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.info-card .label {
+    font-family: var(--font-accent);
+    color: #142f29;
+    font-size: 1.7rem;
+    margin-bottom: 5px;
+    text-transform: lowercase;
+}
+
+.info-card .value-large {
+    font-family: var(--font-heading);
+    color: var(--color-dark-green);
+    font-size: 1.5rem;
+    /* Adjusted from 3rem */
+    line-height: 1;
+    margin: 5px 0;
+}
+
+.info-card .value-medium {
+    font-family: var(--font-accent);
+    font-size: 1.7rem;
+    /* Adjusted size */
+    color: #142f29;
+}
+
+/* Individual Doa Item */
+.doa-list-item-redesign {
+    border: 1px solid var(--color-gold);
+    background-color: white;
+    /* Specify white to be safe */
+    border-radius: 16px;
+    /* Slightly more rounded */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    position: relative;
+    box-shadow: none;
+    /* Flat look */
+    margin-bottom: 5px;
+}
+
+.doa-list-item-redesign strong {
+    font-family: var(--font-heading);
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 700;
+}
+
+.doa-list-item-redesign p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    /* Slightly smaller than name */
+    color: #555;
+    margin-bottom: 20px;
+    /* Space for date */
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.doa-list-item-redesign .time {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    /* DD/MM/YYYY look */
+}
+
+/* Location Card */
+.location-card-redesign {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.gold-title {
+    font-family: var(--font-heading);
+    color: var(--color-gold);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+}
+
+.address-text {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Buttons */
+.btn-location-redesign,
+.btn-rsvp-redesign {
+    display: block;
+    width: 100%;
+    background-color: var(--color-dark-green);
+    color: white;
+    text-decoration: none;
+    padding: 15px 0;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.btn-location-redesign:hover,
+.btn-rsvp-redesign:hover {
+    background-color: #142f29;
+    transform: translateY(-2px);
+}
+
+/* Event Details */
+.event-details {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+
+.event-list {
+    font-family: var(--font-heading);
+    color: #444;
+    margin-bottom: 30px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.dresscode-section {
+    margin-bottom: 40px;
+}
+
+.dresscode-section .label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: #444;
+}
+
+.dresscode-section .value {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--color-dark-green);
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+/* Recent Doa Redesign */
+.recent-doa-section {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin: 20px 0 80px 0;
+    border: 2px solid #D4AF37;
+    /* Gold border as per figma screenshot */
+}
+
+.recent-doa-section .doa-item {
+    border: 1px solid #D4AF37;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: left;
+    background: #fff;
+}
+
+.recent-doa-section .doa-item strong {
+    color: var(--color-dark-green);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+}
+
+/* --- RSVP Page Redesign --- */
+#page-rsvp {
+    /* Ensure scrolling is enabled like the invitation page */
+    overflow-y: auto;
+    height: 100vh;
+    padding-bottom: 80px;
+}
+
+#page-rsvp .glass-card {
+    /* Override glass card to be transparent/cleaner as per design, 
+       or keep it but adjust padding/margins */
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#page-doa h2 {
+    font-family: var(--font-heading);
+    color: var(--color-gold);
+    font-size: 2.2rem;
+    /* Larger */
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    /* More space below title */
+    font-weight: 700;
+}
+
+#page-rsvp h2 {
+    font-family: var(--font-heading);
+    color: var(--color-dark-green);
+    font-size: 2.2rem;
+    text-align: center;
+    margin-top: 60px;
+    /* Space for top flowers */
+    margin-bottom: 10px;
+}
+
+#page-rsvp .section-desc {
+    text-align: center;
+    color: #666;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+#page-rsvp form {
+    padding: 0 20px;
+}
+
+#page-rsvp .form-group {
+    margin-bottom: 20px;
+}
+
+#page-rsvp label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    /* Matches "Nama", "Kehadiran" headers */
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+#page-rsvp input[type="text"],
+#page-rsvp input[type="number"],
+#page-rsvp select,
+#page-rsvp textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-gold);
+    /* Gold border */
+    border-radius: 8px;
+    background-color: #FAFAFA;
+    /* Off white background */
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#page-rsvp input:focus,
+#page-rsvp select:focus,
+#page-rsvp textarea:focus {
+    border-color: var(--color-dark-green);
+    background-color: white;
+}
+
+#page-rsvp textarea {
+    height: 120px;
+    resize: none;
+}
+
+#page-rsvp .btn-submit {
+    display: block;
+    width: 60%;
+    /* Smaller width as per design */
+    margin: 30px auto 0;
+    background: #142f29;
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 500;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+#page-rsvp .btn-submit:active {
+    transform: scale(0.98);
 }
