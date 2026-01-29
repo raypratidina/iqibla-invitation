@@ -651,7 +651,7 @@ footer {
 .info-card {
     background: white;
     gap: 4px;
-    padding: 8px 8px;
+    padding: 16px 16px;
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -665,7 +665,7 @@ footer {
 .info-card .label {
     font-family: var(--font-accent);
     color: #142f29;
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     margin-bottom: 5px;
     text-transform: lowercase;
 }
@@ -673,7 +673,7 @@ footer {
 .info-card .value-large {
     font-family: var(--font-heading);
     color: var(--color-dark-green);
-    font-size: 1.5rem;
+    font-size: 1.0rem;
     /* Adjusted from 3rem */
     line-height: 1;
     margin: 5px 0;
@@ -681,7 +681,7 @@ footer {
 
 .info-card .value-medium {
     font-family: var(--font-accent);
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     /* Adjusted size */
     color: #142f29;
 }
