@@ -1,3 +1,31 @@
+// Import Firebase SDKs
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// --- KONFIGURASI FIREBASE ---
+// 1. Buka console.firebase.google.com
+// 2. Buat project baru
+// 3. Masuk ke Project Settings > General > Your Apps (Web)
+// 4. Salin configSDK dan ganti kode di bawah ini:
+const firebaseConfig = {
+    apiKey: "AIzaSyAG_UtEEjArsOW9rcDW470_8EQNltEo33E",
+    authDomain: "real-time-comment-acb8f.firebaseapp.com",
+    databaseURL: "https://real-time-comment-acb8f-default-rtdb.firebaseio.com",
+    projectId: "real-time-comment-acb8f",
+    storageBucket: "real-time-comment-acb8f.firebasestorage.app",
+    messagingSenderId: "808939789359",
+    appId: "1:808939789359:web:f2c41e6dfea70c89457ada",
+};
+
+// Initialize Firebase
+let app, db;
+try {
+    app = initializeApp(firebaseConfig);
+    db = getDatabase(app);
+} catch (e) {
+    console.warn("Firebase belum dikonfigurasi. Harap isi data firebaseConfig di script.js");
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // SPA Navigation
     const navItems = document.querySelectorAll('.nav-item');
@@ -46,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnOpen) {
         btnOpen.addEventListener('click', () => {
             // Play Music
-            if (player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
-                player.playVideo();
+            if (window.player && window.player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                window.player.playVideo();
             }
             // Go to Main Invitation
             showPage('page-video');
@@ -72,13 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const timestamp = new Date().toLocaleString('id-ID');
             const doa = { name, message: messageDoa, timestamp };
             saveDoa(doa);
-            // We use setTimeout to ensure it's added after page transition if needed, 
-            // but adding immediately to DOM is fine since we are SPA.
-            addDoaToDOM(doa, true);
+            // Optimistic Update (Optional, but Firebase listener will handle it fast)
         }
 
         // 2. Format WhatsApp Message
-        // User requested: Output kehadiran direct ke WA
         const waMessage = `Halo, saya *${name}* ingin konfirmasi kehadiran untuk Grand Opening.\n\nStatus: ${status}\nJumlah Tamu: ${guests} orang\nMembawa Kendaraan: ${vehicle}\n\nTerima kasih.`;
 
         // Encode URL
@@ -120,8 +145,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Load existing doas
-    loadDoas();
+    // Listen to Firebase Data (Realtime)
+    if (db) {
+        const doasRef = ref(db, 'doas');
+        onValue(doasRef, (snapshot) => {
+            const data = snapshot.val();
+            const doas = [];
+
+            if (data) {
+                // Convert object to array
+                Object.keys(data).forEach(key => {
+                    doas.push(data[key]);
+                });
+                // doas.reverse(); // Keep chronological for prepend logic
+            }
+
+            // Update UI
+            updateDoaListUI(doas);
+            // Reverse for recent list to get newest first
+            updateRecentDoas([...doas].reverse());
+        });
+    } else {
+        // Fallback or warning
+        updateDoaListUI([{ name: "Admin", message: "Mohon konfigurasi Firebase untuk melihat ucapan.", timestamp: "-" }]);
+    }
 
     doaForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -131,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const doa = { name, message, timestamp };
         saveDoa(doa);
-        addDoaToDOM(doa, true); // Add to top
         doaForm.reset();
 
         // Close modal after submit
@@ -139,20 +185,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function saveDoa(doa) {
-        let doas = JSON.parse(localStorage.getItem('grand_opening_doas_clean')) || [];
-        doas.unshift(doa); // Add to beginning
-        localStorage.setItem('grand_opening_doas_clean', JSON.stringify(doas));
+        if (db) {
+            push(ref(db, 'doas'), doa);
+        } else {
+            alert("Database belum terkoneksi. Cek script.js");
+        }
     }
 
-    function loadDoas() {
-        let doas = JSON.parse(localStorage.getItem('grand_opening_doas_clean')) || [];
-
-
+    function updateDoaListUI(doas) {
         doaList.innerHTML = '';
         doas.forEach(doa => addDoaToDOM(doa));
-
-        // Also update recent list
-        updateRecentDoas(doas);
     }
 
     function updateRecentDoas(doas) {
@@ -273,8 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // YouTube Player Logic
 var player;
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-player', {
+window.onYouTubeIframeAPIReady = function () {
+    window.player = new YT.Player('youtube-player', {
         height: '0',
         width: '0',
         videoId: '2VLqZtded_0',
