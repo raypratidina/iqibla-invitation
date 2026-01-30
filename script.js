@@ -95,27 +95,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const vehicle = document.getElementById('rsvp-vehicle').value;
         const messageDoa = document.getElementById('rsvp-doa').value;
 
-        // 1. Process Doa (if not empty)
+        // 1. Process Doa (Save to Public Guestbook if not empty)
+        const timestamp = new Date().toLocaleString('id-ID');
         if (messageDoa.trim()) {
-            const timestamp = new Date().toLocaleString('id-ID');
             const doa = { name, message: messageDoa, timestamp };
             saveDoa(doa);
-            // Optimistic Update (Optional, but Firebase listener will handle it fast)
         }
 
-        // 2. Format WhatsApp Message
-        const waMessage = `Halo, saya *${name}* ingin konfirmasi kehadiran untuk Grand Opening.\n\nStatus: ${status}\nJumlah Tamu: ${guests} orang\nMembawa Kendaraan: ${vehicle}\n\nTerima kasih.`;
+        // 2. Save FULL RSVP Data to 'reservasi' (For Admin Dashboard)
+        if (db) {
+            const rsvpData = {
+                timestamp: timestamp,
+                timestamp_sys: Date.now(), // For sorting
+                name: name,
+                status: status,
+                guests: guests,
+                vehicle: vehicle,
+                doa: messageDoa // Also save message here for Admin context
+            };
 
-        // Encode URL
-        const whatsappUrl = `https://wa.me/6282215159061?text=${encodeURIComponent(waMessage)}`;
-
-        // 3. Open WhatsApp in new tab
-        window.open(whatsappUrl, '_blank');
-
-        rsvpForm.reset();
-
-        // 4. Navigate to Doa page to see the result
-        showPage('page-doa');
+            push(ref(db, 'reservasi'), rsvpData)
+                .then(() => {
+                    // Success Feedback
+                    alert("Terima kasih! Konfirmasi kehadiran Anda berhasil disimpan.");
+                    rsvpForm.reset();
+                    showPage('page-doa');
+                })
+                .catch((err) => {
+                    console.error("Error saving RSVP:", err);
+                    alert("Maaf, terjadi kesalahan. Silakan coba lagi.");
+                });
+        }
     });
 
     // Doa (Guestbook) Handling
