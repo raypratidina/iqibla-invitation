@@ -681,7 +681,7 @@ footer {
 
 .info-card .value-medium {
     font-family: var(--font-accent);
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     /* Adjusted size */
     color: #142f29;
 }
@@ -862,6 +862,12 @@ footer {
     border: none;
     padding: 0;
     margin: 0;
+}
+
+#page-doa {
+    overflow-y: auto;
+    height: 100vh;
+    padding-bottom: 80px;
 }
 
 #page-doa h2 {

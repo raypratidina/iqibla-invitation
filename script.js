@@ -341,8 +341,8 @@ function onPlayerReady(event) {
 
     // Fallback for autoplay policy
     document.body.addEventListener('click', function () {
-        if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
-            player.playVideo();
+        if (window.player && window.player.getPlayerState() !== YT.PlayerState.PLAYING) {
+            window.player.playVideo();
         }
     }, { once: true });
 }
@@ -366,12 +366,12 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 // Music Button Control
 document.getElementById('music-control').addEventListener('click', function () {
-    if (player) {
-        const state = player.getPlayerState();
+    if (window.player) {
+        const state = window.player.getPlayerState();
         if (state === YT.PlayerState.PLAYING) {
-            player.pauseVideo();
+            window.player.pauseVideo();
         } else {
-            player.playVideo();
+            window.player.playVideo();
         }
     }
 });
