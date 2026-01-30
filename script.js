@@ -116,14 +116,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             push(ref(db, 'reservasi'), rsvpData)
                 .then(() => {
-                    // Success Feedback
-                    alert("Terima kasih! Konfirmasi kehadiran Anda berhasil disimpan.");
+                    // Show Validation State (Success Modal)
+                    const modalSuccess = document.getElementById('modal-success');
+                    if (modalSuccess) modalSuccess.classList.remove('hidden');
+
                     rsvpForm.reset();
-                    showPage('page-doa');
                 })
                 .catch((err) => {
                     console.error("Error saving RSVP:", err);
-                    alert("Maaf, terjadi kesalahan. Silakan coba lagi.");
+                    alert("Maaf, terjadi kesalahan networking. Silakan coba lagi.");
                 });
         }
     });
@@ -134,6 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDoa = document.getElementById('modal-doa');
     const btnOpenDoa = document.getElementById('btn-open-doa');
     const spanClose = document.getElementsByClassName("close-modal")[0];
+
+    // Success Modal Logic
+    const modalSuccess = document.getElementById('modal-success');
+    const btnCloseSuccess = document.getElementById('btn-close-success');
+    if (btnCloseSuccess && modalSuccess) {
+        btnCloseSuccess.addEventListener('click', () => {
+            modalSuccess.classList.add('hidden');
+            showPage('page-doa'); // Navigate to Doa page after success
+        });
+    }
 
     // Modal Logic
     if (btnOpenDoa) {
